@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  application:
+    container_name: e-commerce-front
+    build: .
+    ports:
+      - "5000:3000"
+   
