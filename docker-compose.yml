@@ -1,9 +1,19 @@
-version: "3"
+name: app-ecommerce-stack
 
 services:
-  application:
-    container_name: e-commerce-front
-    build: .
+  app-ecommerce:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        API_URL: http://localhost:3000/api
+    image: app-ecommerce-image
+    container_name: app-ecommerce
     ports:
-      - "5000:3000"
-   
+      - '4001:8080'
+    networks:
+      - app-ecommerce-network
+
+networks:
+  app-ecommerce-network:
+    driver: bridge

@@ -8,6 +8,10 @@ FROM node:20 AS builder
 # Répertoire où seront copiés les fichiers et où les commandes seront exécutées
 WORKDIR /usr/src/app 
 
+# Set environment variable
+ARG API_URL
+ENV API_URL=${API_URL}
+
 # Copier uniquement le fichier package.json pour tirer parti du cache Docker
 COPY package.json .  
 
@@ -31,10 +35,10 @@ FROM nginx:alpine
 COPY --from=builder /usr/src/app/dist /usr/share/nginx/html 
 
 # Copier un fichier de configuration personnalisé pour Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf  
+COPY nginx.conf /etc/nginx/nginx.conf 
 
 # Exposer le port 80 pour permettre aux utilisateurs d'accéder à l'application
-EXPOSE 80 
+EXPOSE 8080
 
 # Démarre Nginx en mode premier plan (non détaché) pour que le conteneur reste actif
 CMD ["nginx", "-g", "daemon off;"]  
