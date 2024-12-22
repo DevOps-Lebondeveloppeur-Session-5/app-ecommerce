@@ -30,3 +30,19 @@ jobs:
 
             - name: push image with version to dockerHub repository
               run: docker push talel12/e-commerce-front:${{ github.run_number }}
+    
+    deploy-to-vps:
+        needs: build-and-push
+        runs-on: ubuntu-latest
+        steps:
+            - name: deploy image
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                host: ${{ secrets.VPS_HOST }}
+                username: ${{ vars.VPS_USERNAME }}
+                password: ${{ secrets.VPS_PASSWORD }}
+                script: |
+                    cd /home/ubuntu/devops-ecommerce/ecommerce-front
+                    sudo git pull
+                    sudo docker compose pull
+                    sudo docker compose up -d --force-recreate --remove-orphans
