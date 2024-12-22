@@ -1,0 +1,19 @@
+name: CI/CD app-e-commerce
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build-and-push:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v4
+
+            - name: list files
+              run: |
+                echo "Files in the repository:"
+                ls -la
