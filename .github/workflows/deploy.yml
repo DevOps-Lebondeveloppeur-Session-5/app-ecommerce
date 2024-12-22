@@ -24,3 +24,9 @@ jobs:
 
             - name: push image to dockerhub repository
               run: docker push talel12/e-commerce-front
+
+            - name: tag image by version
+              run: docker tag talel12/e-commerce-front talel12/e-commerce-front:${{ github.run_number }}
+
+            - name: push image with version to dockerHub repository
+              run: docker push talel12/e-commerce-front:${{ github.run_number }}
