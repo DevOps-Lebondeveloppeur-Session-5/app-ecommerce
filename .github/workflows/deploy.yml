@@ -13,7 +13,8 @@ jobs:
             - name: checkout repository
               uses: actions/checkout@v4
 
-            - name: list files
-              run: |
-                echo "Files in the repository:"
-                ls -la
+            - name: build image
+              run: docker build -t e-commerce-front .
+
+            - name: list images
+              run: docker images
